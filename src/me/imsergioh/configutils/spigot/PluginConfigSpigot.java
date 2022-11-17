@@ -1,17 +1,16 @@
 package me.imsergioh.configutils.spigot;
 
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-public class PluginConfig extends FileConfiguration {
+public class PluginConfigSpigot {
 
     private final File file;
     private FileConfiguration config;
 
-    public PluginConfig(String folderPath, String fileName){
+    public PluginConfigSpigot(String folderPath, String fileName){
         this.file = new File(folderPath, fileName);
         setupFolder(); setupFile();
         config = YamlConfiguration.loadConfiguration(file);
@@ -31,18 +30,17 @@ public class PluginConfig extends FileConfiguration {
         }
     }
 
-    @Override
-    public String saveToString() {
-        return null;
+    public void set(String path, Object value){
+        config.set(path, value);
     }
 
-    @Override
-    public void loadFromString(String s) throws InvalidConfigurationException {
-
+    public void saveConfig(){
+        try {
+            config.save(file);
+        } catch (Exception e){e.printStackTrace();}
     }
 
-    @Override
-    protected String buildHeader() {
-        return null;
+    public FileConfiguration config() {
+        return config;
     }
 }
