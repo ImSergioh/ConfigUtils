@@ -1,5 +1,6 @@
 package me.imsergioh.configutils.spigot;
 
+import me.imsergioh.configutils.util.FileUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,22 +13,8 @@ public class PluginConfigSpigot {
 
     public PluginConfigSpigot(String folderPath, String fileName){
         this.file = new File(folderPath, fileName);
-        setupFolder(); setupFile();
+        FileUtil.registerFile(file);
         config = YamlConfiguration.loadConfiguration(file);
-    }
-
-    private void setupFolder(){
-        if(!file.getParentFile().exists()){
-            file.getParentFile().mkdirs();
-        }
-    }
-
-    private void setupFile(){
-        if(!file.exists()){
-            try {
-               file.createNewFile();
-            } catch(Exception e){e.printStackTrace();}
-        }
     }
 
     public void set(String path, Object value){
